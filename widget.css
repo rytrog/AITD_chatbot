@@ -1,0 +1,1227 @@
+/* ══════════════════════════════════════════════════════════════
+   AITD AI Chatbot — Premium Chat Widget Styles
+   Clean, professional design with smooth animations.
+   ══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ─── CSS Custom Properties ─────────────────────────────── */
+:root {
+    --widget-primary: #2563EB;
+    --widget-primary-light: #3B82F6;
+    --widget-primary-dark: #1D4ED8;
+    --widget-accent: #2563EB;
+    --widget-bg-dark: #FFFFFF;
+    --widget-bg-card: #F3F4F6;
+    --widget-bg-input: #FFFFFF;
+    --widget-text-primary: #111827;
+    --widget-text-secondary: #6B7280;
+    --widget-text-muted: #9CA3AF;
+    --widget-border: rgba(0, 0, 0, 0.1);
+    --widget-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    --widget-radius: 16px;
+    --widget-radius-sm: 12px;
+    --widget-radius-xs: 8px;
+    --widget-width: 400px;
+    --widget-height: 600px;
+    --widget-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --widget-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TOGGLE BUTTON — PREMIUM HOVER-ONLY EFFECTS SYSTEM
+   All effects (ripples, aurora ring, bloom, particles,
+   breathing) are dormant by default and ONLY activate
+   on hover / touch / focus.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Wrapper Container ─────────────────────────────────── */
+#aitd-toggle-wrapper {
+    position: fixed;
+    bottom: 14px;
+    right: 14px;
+    width: 48px;
+    height: 48px;
+    z-index: 99999;
+    /* Pointer events pass through to children */
+}
+
+/* ─── Toggle Button ─────────────────────────────────────── */
+#aitd-chat-toggle {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #3B82F6 0%, #7C4DFF 50%, #FF3DFF 100%);
+    background-size: 200% 200%;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--widget-transition);
+    animation: aitd-gradient-shift 4s ease infinite;
+    box-shadow:
+        0 0 10px rgba(54, 128, 248, 0.35),
+        0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+/* Breathing scale on hover/touch only */
+#aitd-toggle-wrapper:hover #aitd-chat-toggle,
+#aitd-toggle-wrapper.aitd-touched #aitd-chat-toggle {
+    animation:
+        aitd-gradient-shift 4s ease infinite,
+        aitd-breathe 2.5s ease-in-out infinite;
+    box-shadow:
+        0 0 25px rgba(0, 0, 255, 0.95),
+        /* Pure Blue */
+        0 0 45px rgba(0, 50, 255, 0.85),
+        /* Electric Blue */
+        0 0 70px rgba(0, 100, 255, 0.75),
+        /* Sky Blue Glow */
+        0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+#aitd-chat-toggle:active {
+    transform: scale(0.95);
+}
+
+#aitd-chat-toggle svg {
+    width: 22px;
+    height: 22px;
+    transition: var(--widget-transition);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+
+#aitd-chat-toggle.aitd-open svg.aitd-icon-chat {
+    display: none;
+}
+
+#aitd-chat-toggle.aitd-open svg.aitd-icon-close {
+    display: block;
+}
+
+#aitd-chat-toggle:not(.aitd-open) svg.aitd-icon-close {
+    display: none;
+}
+
+/* ─── Ripple Rings (hover-only) ─────────────────────────── */
+.aitd-ripple {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.7);
+    z-index: 1;
+    backdrop-filter: blur(2.5px);
+    -webkit-backdrop-filter: blur(2.5px);
+    background: radial-gradient(circle, rgba(0, 0, 255, 0.05) 0%, transparent 75%);
+    transition: var(--widget-transition);
+}
+
+/* Activate ripples on hover/touch with crystal-clear pure blue & electric blue glass effects */
+#aitd-toggle-wrapper:hover .aitd-ripple1,
+#aitd-toggle-wrapper.aitd-touched .aitd-ripple1 {
+    border-color: rgba(0, 0, 255, 0.45);
+    box-shadow:
+        0 0 15px rgba(0, 0, 255, 0.35),
+        inset 0 0 10px rgba(0, 0, 255, 0.2);
+    animation: aitd-ripple 3.8s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+}
+
+#aitd-toggle-wrapper:hover .aitd-ripple2,
+#aitd-toggle-wrapper.aitd-touched .aitd-ripple2 {
+    border-color: rgba(0, 50, 255, 0.4);
+    box-shadow:
+        0 0 15px rgba(0, 50, 255, 0.3),
+        inset 0 0 10px rgba(0, 50, 255, 0.15);
+    animation: aitd-ripple 3.8s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+    animation-delay: 1.2s;
+}
+
+#aitd-toggle-wrapper:hover .aitd-ripple3,
+#aitd-toggle-wrapper.aitd-touched .aitd-ripple3 {
+    border-color: rgba(0, 100, 255, 0.35);
+    box-shadow:
+        0 0 15px rgba(0, 100, 255, 0.25),
+        inset 0 0 10px rgba(0, 100, 255, 0.15);
+    animation: aitd-ripple 3.8s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+    animation-delay: 2.4s;
+}
+
+/* ─── Aurora Ring (hover-only) ──────────────────────────── */
+.aitd-aurora-ring {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: conic-gradient(#0000FF,
+            #3B82F6,
+            #00B0FF,
+            #0022FF,
+            #0000FF);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    /* Mask center to make it a ring */
+    -webkit-mask: radial-gradient(circle, transparent 21px, #000 22px);
+    mask: radial-gradient(circle, transparent 21px, #000 22px);
+    filter: blur(2px) saturate(220%);
+}
+
+#aitd-toggle-wrapper:hover .aitd-aurora-ring,
+#aitd-toggle-wrapper.aitd-touched .aitd-aurora-ring {
+    opacity: 0.85;
+    animation: aitd-aurora-spin 10s linear infinite;
+}
+
+/* ─── Bloom Layer (hover-only) ──────────────────────────── */
+.aitd-bloom {
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 0, 255, 0.5) 0%, rgba(37, 99, 235, 0.3) 35%, rgba(0, 100, 255, 0.1) 65%, transparent 80%);
+    filter: blur(25px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+    transition: opacity 0.5s ease;
+    mix-blend-mode: normal;
+}
+
+#aitd-toggle-wrapper:hover .aitd-bloom,
+#aitd-toggle-wrapper.aitd-touched .aitd-bloom {
+    opacity: 0.75;
+    animation: aitd-bloom-pulse 3.5s ease-in-out infinite alternate;
+}
+
+/* ─── Floating Particles (hover-only) ───────────────────── */
+.aitd-particles {
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background:
+        radial-gradient(circle at 15% 20%, #00E5FF 1.5px, transparent 3px),
+        radial-gradient(circle at 85% 25%, #FF3DFF 2px, transparent 4px),
+        radial-gradient(circle at 80% 80%, #3B82F6 1.5px, transparent 3px),
+        radial-gradient(circle at 20% 75%, #7C4DFF 2px, transparent 4px),
+        radial-gradient(circle at 50% 10%, #00E5FF 1.5px, transparent 3px),
+        radial-gradient(circle at 50% 90%, #FF3DFF 1.5px, transparent 3px);
+    background-size: 100% 100%;
+    filter: drop-shadow(0 0 4px #FF3DFF) drop-shadow(0 0 8px #00E5FF);
+}
+
+#aitd-toggle-wrapper:hover .aitd-particles,
+#aitd-toggle-wrapper.aitd-touched .aitd-particles {
+    opacity: 1;
+    animation: aitd-particles-float 2.5s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+   ═══════════════════════════════════════════════════════════ */
+
+/* Gradient background shift */
+@keyframes aitd-gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Breathing scale */
+@keyframes aitd-breathe {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+/* Expanding ripple rings */
+@keyframes aitd-ripple {
+    0% {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.45;
+    }
+
+    100% {
+        transform: scale(2.9);
+        opacity: 0;
+    }
+}
+
+/* Slow aurora ring rotation */
+@keyframes aitd-aurora-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Bloom pulse */
+@keyframes aitd-bloom-pulse {
+    0% {
+        opacity: 0.65;
+        transform: scale(0.9);
+    }
+
+    100% {
+        opacity: 0.95;
+        transform: scale(1.15);
+    }
+}
+
+/* Floating particles drift */
+@keyframes aitd-particles-float {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: translateY(0) scale(0.9) rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1.1) rotate(15deg);
+    }
+}
+
+/* ─── Chat Container ────────────────────────────────────── */
+#aitd-chat-container {
+    position: fixed;
+    bottom: 76px;
+    right: 16px;
+    width: var(--widget-width);
+    height: var(--widget-height);
+    border-radius: var(--widget-radius);
+    overflow: hidden;
+    z-index: 99998;
+    display: flex;
+    flex-direction: column;
+    background: var(--widget-bg-dark);
+    border: 1px solid var(--widget-border);
+    box-shadow: var(--widget-shadow);
+    font-family: var(--widget-font);
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+    transition:
+        opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#aitd-chat-container.aitd-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+}
+
+/* ─── Chat Header ───────────────────────────────────────── */
+#aitd-chat-header {
+    background: var(--widget-primary);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+#aitd-header-controls {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+}
+
+#aitd-chat-close {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--widget-transition);
+}
+
+#aitd-chat-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    transform: scale(1.05);
+}
+
+#aitd-chat-close:active {
+    transform: scale(0.95);
+}
+
+#aitd-chat-close svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ─── Messages Area ─────────────────────────────────────── */
+#aitd-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scroll-behavior: smooth;
+    background: #F9FAFB;
+}
+
+#aitd-chat-messages::-webkit-scrollbar {
+    width: 5px;
+}
+
+#aitd-chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#aitd-chat-messages::-webkit-scrollbar-thumb {
+    background: #D1D5DB;
+    border-radius: 10px;
+}
+
+/* ─── Message Bubbles ───────────────────────────────────── */
+.aitd-message {
+    display: flex;
+    gap: 10px;
+    max-width: 95%;
+    animation: aitd-fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aitd-message.aitd-bot {
+    align-self: flex-start;
+}
+
+.aitd-message.aitd-user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.aitd-msg-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    overflow: hidden;
+}
+
+.aitd-bot .aitd-msg-avatar {
+    background: #EBF5FF;
+    border: 1px solid #BFDBFE;
+}
+
+.aitd-user .aitd-msg-avatar {
+    background: #EBF5FF;
+    border: 1px solid #BFDBFE;
+}
+
+.aitd-msg-bubble {
+    padding: 12px 16px;
+    border-radius: var(--widget-radius-sm);
+    font-size: 14px;
+    line-height: 1.6;
+    word-wrap: break-word;
+    position: relative;
+}
+
+.aitd-bot .aitd-msg-bubble {
+    background: #FFFFFF;
+    color: var(--widget-text-primary);
+    border: 1px solid #E5E7EB;
+    border-bottom-left-radius: 4px;
+}
+
+.aitd-user .aitd-msg-bubble {
+    background: var(--widget-primary);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+@keyframes aitd-fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─── Typing Indicator ──────────────────────────────────── */
+.aitd-typing {
+    display: flex;
+    gap: 5px;
+    padding: 14px 18px;
+    align-items: center;
+}
+
+.aitd-typing-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #93C5FD;
+    animation: aitd-typingBounce 1.4s ease-in-out infinite;
+}
+
+.aitd-typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.aitd-typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes aitd-typingBounce {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+
+    30% {
+        transform: translateY(-8px);
+        opacity: 1;
+    }
+}
+
+/* ─── Suggestions ───────────────────────────────────────── */
+.aitd-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 16px 12px;
+    background: #F9FAFB;
+}
+
+.aitd-suggestion-btn {
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid #E5E7EB;
+    background: #FFFFFF;
+    color: var(--widget-primary);
+    font-size: 12px;
+    font-family: var(--widget-font);
+    cursor: pointer;
+    transition: var(--widget-transition);
+    white-space: nowrap;
+}
+
+.aitd-suggestion-btn:hover {
+    background: #EBF5FF;
+    border-color: var(--widget-primary-light);
+    transform: translateY(-1px);
+}
+
+/* ─── Input Area ────────────────────────────────────────── */
+#aitd-chat-input-area {
+    padding: 12px 16px;
+    background: #FFFFFF;
+    border-top: 1px solid #E5E7EB;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#aitd-chat-input {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: 24px;
+    border: 1px solid #D1D5DB;
+    background: #F9FAFB;
+    color: var(--widget-text-primary);
+    font-size: 14px;
+    font-family: var(--widget-font);
+    outline: none;
+    transition: var(--widget-transition);
+}
+
+#aitd-chat-input::placeholder {
+    color: var(--widget-text-muted);
+}
+
+#aitd-chat-input:focus {
+    border-color: var(--widget-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+#aitd-chat-send {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: var(--widget-primary);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--widget-transition);
+    flex-shrink: 0;
+}
+
+#aitd-chat-send:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+}
+
+#aitd-chat-send:active {
+    transform: scale(0.95);
+}
+
+#aitd-chat-send:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#aitd-chat-send svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ─── Powered By Footer ─────────────────────────────────── */
+.aitd-powered-by {
+    text-align: center;
+    padding: 5px;
+    font-size: 10px;
+    color: var(--widget-text-muted);
+    background: #FFFFFF;
+    border-top: 1px solid #F3F4F6;
+}
+
+/* ─── Header Avatar (compact) ───────────────────────────── */
+.aitd-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.aitd-header-info {
+    position: relative;
+    z-index: 1;
+}
+
+.aitd-header-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+}
+
+.aitd-header-subtitle {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.aitd-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #34D399;
+    animation: aitd-blink 2s ease-in-out infinite;
+}
+
+@keyframes aitd-blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* ─── Responsive ────────────────────────────────────────── */
+@media (max-width: 600px) {
+    #aitd-chat-container {
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        border: none;
+    }
+
+    #aitd-chat-container.aitd-visible {
+        transform: none !important;
+    }
+
+    #aitd-toggle-wrapper {
+        bottom: 12px;
+        right: 12px;
+        width: 44px;
+        height: 44px;
+    }
+
+    #aitd-toggle-wrapper #aitd-chat-toggle {
+        width: 44px;
+        height: 44px;
+    }
+
+    .aitd-ripple {
+        width: 44px;
+        height: 44px;
+    }
+
+    .aitd-aurora-ring {
+        top: -7px;
+        left: -7px;
+    }
+
+    .aitd-bloom {
+        top: -32px;
+        left: -32px;
+    }
+
+    .aitd-particles {
+        top: -14px;
+        left: -14px;
+    }
+
+    #aitd-toggle-wrapper.aitd-open {
+        display: none !important;
+    }
+}
+
+/* ─── Feedback System ───────────────────────────────────── */
+.aitd-feedback-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+    padding-top: 4px;
+    border-top: 1px dashed #E5E7EB;
+}
+
+.aitd-feedback-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: var(--widget-radius-xs);
+    transition: var(--widget-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+}
+
+.aitd-feedback-btn:hover {
+    background: #F3F4F6;
+    opacity: 1;
+}
+
+.aitd-feedback-btn.liked {
+    background: #EBF5FF;
+    border: 1px solid #BFDBFE;
+    opacity: 1;
+}
+
+.aitd-feedback-btn.disliked {
+    background: #FEE2E2;
+    border: 1px solid #FCA5A5;
+    opacity: 1;
+}
+
+.aitd-feedback-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.4 !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+/* ─── Suggested Follow-up Chips ─────────────────────────── */
+.aitd-suggested-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed #E5E7EB;
+}
+
+.aitd-chip-btn {
+    padding: 5px 12px;
+    border-radius: 16px;
+    border: 1px solid #BFDBFE;
+    background: #EFF6FF;
+    color: var(--widget-primary);
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--widget-font);
+    cursor: pointer;
+    transition: var(--widget-transition);
+    white-space: nowrap;
+    line-height: 1.4;
+}
+
+.aitd-chip-btn:hover {
+    background: var(--widget-primary);
+    color: #FFFFFF;
+    border-color: var(--widget-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+
+.aitd-chip-btn:active {
+    transform: translateY(0) scale(0.97);
+}
+
+/* ─── Info Button in Header ────────────────────────────── */
+.aitd-info-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    font-size: 19px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--widget-transition);
+    padding: 0;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    line-height: 1;
+}
+
+.aitd-info-btn:hover {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+.aitd-info-btn:active {
+    transform: scale(0.95);
+}
+
+.aitd-info-btn:focus {
+    outline: none;
+}
+
+/* ─── Copyright Modal ───────────────────────────────────── */
+.aitd-copyright-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000000;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(15px);
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aitd-copyright-modal.aitd-modal-visible {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
+.aitd-copyright-header {
+    background: #111111;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #222222;
+}
+
+.aitd-copyright-header-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+#aitd-copyright-close {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--widget-transition);
+}
+
+#aitd-copyright-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+#aitd-copyright-close svg {
+    width: 16px;
+    height: 16px;
+}
+
+.aitd-copyright-content {
+    flex: 1;
+    overflow-y: scroll;
+    /* Force vertical scrollbar to be always present to prevent layout shifting on tab switch */
+    -webkit-overflow-scrolling: touch;
+    /* High FPS momentum scrolling on touch devices */
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    /* Stretch children to avoid flex layout centering jitter */
+    color: #ffffff;
+    scrollbar-gutter: stable;
+    /* Standard property to keep layout stable */
+}
+
+.aitd-copyright-content::-webkit-scrollbar {
+    width: 5px;
+}
+
+.aitd-copyright-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.aitd-copyright-content::-webkit-scrollbar-thumb {
+    background: #333333;
+    border-radius: 10px;
+}
+
+.aitd-copyright-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    background: #111827;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #3b82f6;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+    overflow: hidden;
+    flex-shrink: 0;
+    align-self: center;
+    /* Horizontally center within the stretch parent */
+}
+
+.aitd-copyright-content h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.aitd-version {
+    font-size: 12px;
+    font-weight: 600;
+    color: #60a5fa;
+    background: #111827;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #1e293b;
+}
+
+.aitd-divider {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background: #222222;
+    margin: 16px 0;
+}
+
+.aitd-copyright-section {
+    width: 100%;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.aitd-copyright-section h3 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #9ca3af;
+    margin-bottom: 8px;
+}
+
+.aitd-copyright-section p {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #e5e7eb;
+    margin: 4px 0;
+}
+
+.aitd-author {
+    font-weight: 500;
+    color: #ffffff;
+    padding-left: 8px;
+    border-left: 3px solid #3b82f6;
+    margin-bottom: 6px !important;
+}
+
+.aitd-academic-note {
+    font-style: italic;
+    color: #9ca3af;
+    margin-top: 10px !important;
+    font-size: 12.5px !important;
+}
+
+.aitd-spec-item {
+    font-size: 13px !important;
+    color: #e5e7eb !important;
+    margin-bottom: 6px !important;
+    line-height: 1.4 !important;
+}
+
+.aitd-spec-item strong {
+    color: #3b82f6;
+}
+
+.aitd-copyright-footer {
+    margin-top: auto;
+    padding-top: 20px;
+    width: 100%;
+}
+
+.aitd-copyright-footer p {
+    font-size: 11px;
+    color: #4b5563;
+}
+
+/* ─── Logo Image Styles ─────────────────────────────────── */
+.aitd-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
+/* ─── Markdown Tables ───────────────────────────────────── */
+.aitd-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 12px 0;
+    border-radius: var(--widget-radius-xs);
+    border: 1px solid #ebb49b;
+    box-shadow: 0 4px 6px -1px rgba(15, 15, 15, 0.05);
+}
+
+.aitd-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: left;
+    background: #FFFFFF;
+}
+
+.aitd-table th {
+    background: #1f1f1f;
+    color: #FFFFFF;
+    font-weight: 600;
+    padding: 10px 14px;
+    border-bottom: 2px solid #be8c7a;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+}
+
+.aitd-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #E8DDD7;
+    color: #1f1f1f;
+    line-height: 1.5;
+}
+
+.aitd-table tr:last-child td {
+    border-bottom: none;
+}
+
+.aitd-table tr:nth-child(even) {
+    background: #F5EBE6;
+}
+
+/* ─── Info Tabs in Copyright Modal ──────────────────────── */
+.aitd-info-tabs {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333333;
+    padding-bottom: 8px;
+    justify-content: space-around;
+}
+
+.aitd-info-tab-btn {
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 6px 12px;
+    transition: var(--widget-transition);
+    border-radius: var(--widget-radius-xs);
+}
+
+.aitd-info-tab-btn:hover {
+    color: #ffffff;
+    background: #111827;
+}
+
+.aitd-info-tab-btn.active {
+    color: #ffffff;
+    background: #1e293b;
+    border: 1px solid #3b82f6;
+}
+
+.aitd-info-tab-content {
+    width: 100%;
+    text-align: left;
+    color: #e5e7eb;
+}
+
+.aitd-tab-pane {
+    animation: aitd-tab-fade-in 0.15s cubic-bezier(0.4, 0, 0.2, 1) both;
+    will-change: opacity, transform;
+    transform: translate3d(0, 0, 0);
+    /* GPU acceleration */
+}
+
+@keyframes aitd-tab-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.aitd-tab-pane h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #222222;
+    padding-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.aitd-tab-pane ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 8px 0;
+}
+
+.aitd-tab-pane ol {
+    list-style-type: decimal;
+    padding-left: 20px;
+    margin: 8px 0;
+}
+
+.aitd-tab-pane li {
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    color: #d1d5db;
+}
+
+.aitd-tab-pane li strong {
+    color: inherit;
+    /* Reset to inherit, no custom coloring */
+}
+
+.aitd-tab-pane ul ul,
+.aitd-tab-pane ul ol {
+    margin-top: 6px;
+    margin-bottom: 0;
+}
